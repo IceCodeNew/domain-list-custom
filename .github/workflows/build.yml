@@ -14,8 +14,8 @@ jobs:
     steps:
       - name: Compare latest tags and set variables
         run: |
-          upstreamLatestTag=$(curl -sSL --connect-timeout 5 --retry 5 -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/IceCodeNew/domain-list-community/releases/latest | grep "tag_name" | cut -d\" -f4)
-          thisLatestTag=$(curl -sSL --connect-timeout 5 --retry 5 -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ github.repository }}/releases/latest | grep "tag_name" | cut -d\" -f4)
+          upstreamLatestTag=$(curl -sSL --fail --retry 5 --retry-delay 10 --retry-max-time 60 -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/IceCodeNew/domain-list-community/releases/latest | grep "tag_name" | cut -d\" -f4)
+          thisLatestTag=$(curl -sSL --fail --retry 5 --retry-delay 10 --retry-max-time 60 -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ github.repository }}/releases/latest | grep "tag_name" | cut -d\" -f4)
           if [[ $upstreamLatestTag != $thisLatestTag ]]; then
             echo "NeedToSync=true" >> $GITHUB_ENV
           fi
@@ -43,8 +43,8 @@ jobs:
       - name: Append attribute rules
         if: ${{ env.NeedToSync }}
         run: |
-          $(type -P curl) -LRq --retry 5 --retry-delay 10 --retry-max-time 60 'https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt' -o './domain-list-community/data/cn'
-          $(type -P curl) -LRq --retry 5 --retry-delay 10 --retry-max-time 60 'https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-!cn.txt' -o './domain-list-community/data/geolocation-\!cn'
+          $(type -P curl) -LRq --fail --retry 5 --retry-delay 10 --retry-max-time 60 'https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt' -o './domain-list-community/data/cn'
+          $(type -P curl) -LRq --fail --retry 5 --retry-delay 10 --retry-max-time 60 'https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-!cn.txt' -o './domain-list-community/data/geolocation-\!cn'
           sed -i -E -e '/scholar\.google|\.and|\.chrome|\.dclk|\.gbiz|\.gle|\.gmail|\.goo|\.goog|\.google|\.guge|\.hangout|\.nexus|\.xn--qcka1pmc|\.youtube|crashlytics\.com|doubleclick\.net|gstatic\.com|gvt2\.com|google\.com|googleadservices\.com|google-?analytics\.com|googleapis\.com|googletagmanager\.com|googletagservices\.com|recaptcha\.net$/d' -e 's/^domain://' -e 's/:@!?cn$//' './domain-list-community/data/cn' './domain-list-community/data/geolocation-\!cn'
 
       - name: Get dependencies and run
