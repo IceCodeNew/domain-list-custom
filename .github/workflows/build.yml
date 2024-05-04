@@ -45,7 +45,6 @@ jobs:
         run: |
           $(type -P curl) -LRq --retry 5 --retry-delay 10 --retry-max-time 60 'https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt' -o './domain-list-community/data/cn'
           $(type -P curl) -LRq --retry 5 --retry-delay 10 --retry-max-time 60 'https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-!cn.txt' -o './domain-list-community/data/geolocation-\!cn'
-          sed -i -E -e '/scholar\.google|\.and|\.chrome|\.dclk|\.gbiz|\.gle|\.gmail|\.goo|\.goog|\.google|\.guge|\.hangout|\.nexus|\.xn--qcka1pmc|\.youtube|crashlytics\.com|doubleclick\.net|gstatic\.com|gvt2\.com|google\.com|googleadservices\.com|google-?analytics\.com|googleapis\.com|googletagmanager\.com|googletagservices\.com|recaptcha\.net$/d' -e 's/^domain://' -e 's/:@!?cn$//' './domain-list-community/data/cn' './domain-list-community/data/geolocation-\!cn'
 
       - name: Get dependencies and run
         if: ${{ env.NeedToSync }}
