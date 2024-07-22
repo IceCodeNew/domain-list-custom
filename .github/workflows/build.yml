@@ -51,8 +51,8 @@ jobs:
         run: |
           go run ./ \
               --datapath='./domain-list-community/data/' \
-              --exportlists='category-ads-all,tld-cn,cn,geolocation-cn,tld-!cn,geolocation-!cn,private,apple,icloud,google,steam,bilibili' \
-              --excludeattrs='cn@!cn@ads,geolocation-cn@!cn@ads,geolocation-!cn@cn@ads,bilibili@!cn@ads'
+              --exportlists='category-ads-all,tld-cn,cn,geolocation-cn,tld-!cn,geolocation-!cn,private,apple,icloud,google,steam,bilibili,category-entertainment' \
+              --excludeattrs='cn@!cn@ads,geolocation-cn@!cn@ads,geolocation-!cn@cn@ads,bilibili@!cn@ads,category-entertainment@cn@ads'
 
       - name: Generate sha256 hashsum
         if: ${{ env.NeedToSync }}
