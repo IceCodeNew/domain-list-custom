@@ -1,10 +1,11 @@
 module github.com/Loyalsoldier/domain-list-custom
 
 go 1.21
-toolchain go1.22.5
+
+toolchain go1.21.10
 
 require (
-	github.com/v2fly/v2ray-core/v5 v5.19.0
+	github.com/v2fly/v2ray-core/v5 v5.18.0
 	google.golang.org/protobuf v1.34.2
 )
 
